@@ -1,0 +1,6 @@
+{
+  "name": "Chino Cafe & Restaurant Digital Menu",
+  "description": "A refined, mobile-first multilingual digital QR menu for Chino Café-Restaurant in Shahroud, Iran.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
