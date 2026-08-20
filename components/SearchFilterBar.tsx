@@ -4,7 +4,7 @@ import React, { useRef } from 'react';
 import { Tag, TagId, Language } from '@/types/menu';
 import { translations } from '@/lib/i18n';
 import { getLocalizedText } from '@/lib/utils';
-import { Search, X, SlidersHorizontal, Check } from 'lucide-react';
+import { Search, X, Check } from 'lucide-react';
 
 interface SearchFilterBarProps {
   searchQuery: string;
@@ -32,11 +32,11 @@ export default function SearchFilterBar({
   const isFiltering = searchQuery.trim() !== '' || selectedTag !== null;
 
   return (
-    <div className="bg-[#FAF7F2] border-b border-[#E6DEC8] px-4 py-3 sm:px-6">
-      <div className="max-w-4xl mx-auto space-y-2.5">
+    <div className="bg-[#211E1B] border-b border-[#332C25] px-4 py-3 sm:px-6 transition-colors">
+      <div className="max-w-5xl mx-auto space-y-2.5">
         {/* Search Input Box */}
         <div className="relative flex items-center">
-          <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none text-[#8A7A68]">
+          <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none text-[#7D7162]">
             <Search className="w-4 h-4" />
           </div>
           <input
@@ -46,7 +46,7 @@ export default function SearchFilterBar({
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
             placeholder={t.searchPlaceholder}
-            className="w-full bg-[#FFFFFF] border border-[#DDD1BE] focus:border-[#C8933F] focus:ring-2 focus:ring-[#C8933F]/20 text-[#1F1C18] text-xs sm:text-sm rounded-xl py-2 ps-9 pe-9 transition-all placeholder:text-[#A0907E] outline-none"
+            className="w-full bg-[#2A241F] border border-[#3A3229] focus:border-[#BD9557]/70 text-[#EAE3D7] text-xs sm:text-sm rounded py-2 ps-9 pe-9 transition-all placeholder:text-[#7D7162] outline-none"
             dir={language === 'en' ? 'ltr' : 'rtl'}
           />
           {searchQuery && (
@@ -55,7 +55,7 @@ export default function SearchFilterBar({
                 onSearchChange('');
                 inputRef.current?.focus();
               }}
-              className="absolute inset-y-0 end-0 flex items-center pe-3 text-[#8A7A68] hover:text-[#1F1C18] cursor-pointer"
+              className="absolute inset-y-0 end-0 flex items-center pe-3 text-[#7D7162] hover:text-[#EAE3D7] cursor-pointer"
               aria-label="Clear search"
             >
               <X className="w-4 h-4" />
@@ -68,10 +68,10 @@ export default function SearchFilterBar({
           {/* All tags button */}
           <button
             onClick={() => onSelectTag(null)}
-            className={`flex-none px-2.5 py-1 rounded-lg text-xs font-medium transition-colors cursor-pointer ${
+            className={`flex-none px-2.5 py-1 rounded text-xs transition-colors cursor-pointer ${
               selectedTag === null
-                ? 'bg-[#1A1815] text-[#FAF7F2]'
-                : 'bg-[#EDE4D5] text-[#6B5D4D] hover:bg-[#E3D7C4]'
+                ? 'bg-[#3A3229] text-[#EAE3D7] font-semibold border border-[#4D4236]'
+                : 'bg-[#2A241F] text-[#8C8070] hover:text-[#EAE3D7] border border-[#352D25]'
             }`}
           >
             {t.allTags}
@@ -84,13 +84,13 @@ export default function SearchFilterBar({
               <button
                 key={tag.id}
                 onClick={() => onSelectTag(isSelected ? null : tag.id)}
-                className={`flex-none inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium transition-colors cursor-pointer ${
+                className={`flex-none inline-flex items-center gap-1 px-2.5 py-1 rounded text-xs transition-colors cursor-pointer ${
                   isSelected
-                    ? 'bg-[#8C5D1F] text-[#FAF7F2] shadow-xs'
-                    : 'bg-[#EDE4D5] text-[#5C5042] hover:bg-[#E3D7C4]'
+                    ? 'bg-[#BD9557] text-[#1C1916] font-semibold border border-[#BD9557]'
+                    : 'bg-[#2A241F] text-[#8C8070] hover:text-[#EAE3D7] border border-[#352D25]'
                 }`}
               >
-                {isSelected && <Check className="w-3 h-3 text-[#FAF7F2]" />}
+                {isSelected && <Check className="w-3 h-3 text-[#1C1916]" />}
                 <span>{getLocalizedText(tag.label, language)}</span>
               </button>
             );
@@ -103,7 +103,7 @@ export default function SearchFilterBar({
                 onSearchChange('');
                 onSelectTag(null);
               }}
-              className="flex-none inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium text-[#A34836] bg-[#FDEAE7] hover:bg-[#FCDFD9] transition-colors cursor-pointer"
+              className="flex-none inline-flex items-center gap-1 px-2.5 py-1 rounded text-xs text-[#C27365] bg-[#342421] hover:bg-[#422C28] border border-[#4D332D] transition-colors cursor-pointer"
             >
               <X className="w-3 h-3" />
               <span>{t.clearFilter}</span>

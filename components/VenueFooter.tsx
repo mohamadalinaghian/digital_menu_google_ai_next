@@ -13,7 +13,6 @@ import {
   Copy,
   Check,
   Share2,
-  Heart,
 } from 'lucide-react';
 
 interface VenueFooterProps {
@@ -51,18 +50,14 @@ export default function VenueFooter({ venue, language }: VenueFooterProps) {
   };
 
   return (
-    <footer className="bg-[#181613] text-[#FAF7F2] border-t border-[#2D261F] pt-8 pb-14 px-4 sm:px-6">
-      <div className="max-w-4xl mx-auto space-y-6">
+    <footer className="bg-[#191614] text-[#EAE3D7] border-t border-[#2A241E] pt-8 pb-12 px-4 sm:px-6">
+      <div className="max-w-5xl mx-auto space-y-6">
         {/* Brand & Narrative */}
-        <div className="text-center space-y-2 max-w-lg mx-auto">
-          <div className="inline-flex items-center gap-2">
-            <span className="h-px w-6 bg-[#D4A359]/60" />
-            <h3 className="text-xl font-bold tracking-tight text-[#FAF7F2]">
-              {getLocalizedText(venue.name, language)}
-            </h3>
-            <span className="h-px w-6 bg-[#D4A359]/60" />
-          </div>
-          <p className="text-xs text-[#C4B59F] leading-relaxed font-light">
+        <div className="text-center space-y-2 max-w-md mx-auto">
+          <h3 className="font-serif text-lg text-[#EAE3D7] font-normal tracking-wider">
+            {getLocalizedText(venue.name, language)}
+          </h3>
+          <p className="text-xs text-[#8E8272] leading-relaxed font-light">
             {getLocalizedText(venue.description, language)}
           </p>
         </div>
@@ -70,31 +65,31 @@ export default function VenueFooter({ venue, language }: VenueFooterProps) {
         {/* Info Grid: Address, Hours, Wi-Fi, Phone */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
           {/* Address & Hours */}
-          <div className="p-4 rounded-xl bg-[#231F1A] border border-[#352F26] space-y-2.5">
-            <div className="flex items-start gap-2.5 text-xs text-[#D8C9B5]">
-              <MapPin className="w-4 h-4 text-[#D4A359] shrink-0 mt-0.5" />
+          <div className="p-3.5 rounded bg-[#221D19] border border-[#302821] space-y-2">
+            <div className="flex items-start gap-2 text-xs text-[#C4B7A5]">
+              <MapPin className="w-3.5 h-3.5 text-[#BD9557] shrink-0 mt-0.5" />
               <span>{getLocalizedText(venue.address, language)}</span>
             </div>
-            <div className="flex items-start gap-2.5 text-xs text-[#D8C9B5]">
-              <Clock className="w-4 h-4 text-[#D4A359] shrink-0 mt-0.5" />
+            <div className="flex items-start gap-2 text-xs text-[#C4B7A5]">
+              <Clock className="w-3.5 h-3.5 text-[#BD9557] shrink-0 mt-0.5" />
               <span>{getLocalizedText(venue.hours, language)}</span>
             </div>
           </div>
 
           {/* Wi-Fi & Quick Actions */}
-          <div className="p-4 rounded-xl bg-[#231F1A] border border-[#352F26] space-y-2.5 flex flex-col justify-between">
+          <div className="p-3.5 rounded bg-[#221D19] border border-[#302821] space-y-2.5 flex flex-col justify-between">
             <div className="flex items-center justify-between gap-2">
-              <div className="flex items-center gap-2 text-xs text-[#D8C9B5]">
-                <Wifi className="w-4 h-4 text-[#D4A359]" />
+              <div className="flex items-center gap-2 text-xs text-[#C4B7A5]">
+                <Wifi className="w-3.5 h-3.5 text-[#BD9557]" />
                 <span>
-                  {t.wifi}: <strong className="text-white font-mono">{venue.wifiSsid}</strong>
+                  {t.wifi}: <strong className="text-[#EAE3D7] font-mono">{venue.wifiSsid}</strong>
                 </span>
               </div>
               {venue.wifiPassword && (
                 <button
                   id="copy-wifi-btn"
                   onClick={handleCopyWifi}
-                  className="inline-flex items-center gap-1 text-[11px] px-2 py-1 rounded-md bg-[#332C23] hover:bg-[#433A2E] text-[#D4A359] border border-[#4D4032] transition-colors cursor-pointer"
+                  className="inline-flex items-center gap-1 text-[10px] px-2 py-0.5 rounded bg-[#2C251F] hover:bg-[#382F27] text-[#BD9557] border border-[#3D332A] transition-colors cursor-pointer"
                 >
                   {copiedWifi ? (
                     <>
@@ -115,31 +110,31 @@ export default function VenueFooter({ venue, language }: VenueFooterProps) {
             <div className="flex items-center gap-2 pt-1">
               <a
                 href={`tel:${venue.phone}`}
-                className="flex-1 inline-flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-lg bg-[#2E2820] hover:bg-[#3D352A] text-xs text-[#FAF7F2] border border-[#443A2E] transition-colors"
+                className="flex-1 inline-flex items-center justify-center gap-1.5 py-1.5 px-3 rounded bg-[#2C251F] hover:bg-[#382F27] text-xs text-[#EAE3D7] border border-[#3D332A] transition-colors"
               >
-                <Phone className="w-3.5 h-3.5 text-[#D4A359]" />
+                <Phone className="w-3.5 h-3.5 text-[#BD9557]" />
                 <span>{t.call}</span>
               </a>
               <a
                 href={`https://instagram.com/${venue.instagram}`}
                 target="_blank"
                 rel="noreferrer"
-                className="flex-1 inline-flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-lg bg-[#2E2820] hover:bg-[#3D352A] text-xs text-[#FAF7F2] border border-[#443A2E] transition-colors"
+                className="flex-1 inline-flex items-center justify-center gap-1.5 py-1.5 px-3 rounded bg-[#2C251F] hover:bg-[#382F27] text-xs text-[#EAE3D7] border border-[#3D332A] transition-colors"
               >
-                <Instagram className="w-3.5 h-3.5 text-[#D4A359]" />
+                <Instagram className="w-3.5 h-3.5 text-[#BD9557]" />
                 <span>@{venue.instagram}</span>
               </a>
               <button
                 id="share-menu-btn"
                 onClick={handleShareMenu}
-                className="p-1.5 rounded-lg bg-[#2E2820] hover:bg-[#3D352A] text-[#D8C9B5] border border-[#443A2E] transition-colors cursor-pointer"
+                className="p-1.5 rounded bg-[#2C251F] hover:bg-[#382F27] text-[#C4B7A5] border border-[#3D332A] transition-colors cursor-pointer"
                 title={t.shareMenu}
                 aria-label={t.shareMenu}
               >
                 {copiedShare ? (
-                  <Check className="w-4 h-4 text-[#52B788]" />
+                  <Check className="w-3.5 h-3.5 text-[#52B788]" />
                 ) : (
-                  <Share2 className="w-4 h-4 text-[#D4A359]" />
+                  <Share2 className="w-3.5 h-3.5 text-[#BD9557]" />
                 )}
               </button>
             </div>
@@ -147,9 +142,8 @@ export default function VenueFooter({ venue, language }: VenueFooterProps) {
         </div>
 
         {/* Respectful Hospitality Sign-off */}
-        <div className="text-center pt-4 border-t border-[#28221B] text-[11px] text-[#8E8070] flex items-center justify-center gap-1">
-          <span>میزبانی با مهر در کافه و رستوران چینو شاهرود</span>
-          <Heart className="w-3 h-3 text-[#A34836] fill-[#A34836]/40 inline" />
+        <div className="text-center pt-3 border-t border-[#26201A] text-[11px] text-[#7D7162]">
+          <span>میزبانی با مهر در کافه-رستوران چینو شاهرود</span>
         </div>
       </div>
     </footer>

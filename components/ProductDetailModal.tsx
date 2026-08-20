@@ -10,10 +10,8 @@ import {
   Sparkles,
   Clock,
   Flame,
-  Info,
   Layers,
   HeartHandshake,
-  Check,
 } from 'lucide-react';
 
 interface ProductDetailModalProps {
@@ -30,7 +28,6 @@ export default function ProductDetailModal({
   onClose,
 }: ProductDetailModalProps) {
   const t = translations[language];
-  const isRtl = language !== 'en';
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -55,18 +52,18 @@ export default function ProductDetailModal({
       role="dialog"
       aria-modal="true"
       aria-labelledby="modal-product-title"
-      className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-[#141210]/70 backdrop-blur-xs transition-opacity duration-300"
+      className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-[#100E0C]/80 backdrop-blur-xs transition-opacity duration-300"
       onClick={onClose}
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="relative w-full max-w-lg bg-[#FAF7F2] rounded-t-3xl sm:rounded-2xl max-h-[90vh] overflow-y-auto border border-[#E6DEC8] shadow-2xl animate-in slide-in-from-bottom-8 sm:zoom-in-95 duration-200"
+        className="relative w-full max-w-lg bg-[#241F1A] rounded-t-2xl sm:rounded-lg max-h-[90vh] overflow-y-auto border border-[#3A3127] shadow-2xl text-[#EAE3D7]"
       >
-        {/* Close Button Top Right */}
+        {/* Close Button */}
         <button
           id="close-product-modal-btn"
           onClick={onClose}
-          className="absolute top-3.5 end-3.5 z-20 w-8 h-8 rounded-full bg-[#1A1815]/75 hover:bg-[#1A1815] text-[#FAF7F2] flex items-center justify-center transition-colors shadow-md cursor-pointer"
+          className="absolute top-3.5 end-3.5 z-20 w-8 h-8 rounded-full bg-[#1A1714]/80 hover:bg-[#1A1714] text-[#EAE3D7] flex items-center justify-center transition-colors border border-[#3A3127] cursor-pointer"
           aria-label={t.close}
         >
           <X className="w-4 h-4" />
@@ -74,16 +71,16 @@ export default function ProductDetailModal({
 
         {/* Product Image Banner (if available) */}
         {product.image && (
-          <div className="relative w-full h-56 sm:h-64 bg-[#ECE3D4] overflow-hidden">
+          <div className="relative w-full h-56 sm:h-64 bg-[#1C1814] overflow-hidden">
             <Image
               src={product.image}
               alt={getLocalizedText(product.imageAlt || product.name, language)}
               fill
               sizes="(max-width: 640px) 100vw, 500px"
-              className="object-cover"
+              className="object-cover opacity-90"
               referrerPolicy="no-referrer"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#FAF7F2] via-transparent to-black/30" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#241F1A] via-transparent to-black/40" />
           </div>
         )}
 
@@ -91,7 +88,7 @@ export default function ProductDetailModal({
           {/* Header & Badges */}
           <div>
             {product.tags && product.tags.length > 0 && (
-              <div className="flex flex-wrap items-center gap-1.5 mb-2">
+              <div className="flex flex-wrap items-center gap-1.5 mb-2 text-xs font-mono text-[#8C8070]">
                 {product.tags.map((tagId) => {
                   const tag = tagsMap[tagId];
                   if (!tag) return null;
@@ -99,10 +96,10 @@ export default function ProductDetailModal({
                   return (
                     <span
                       key={tagId}
-                      className={`inline-flex items-center text-xs px-2 py-0.5 rounded-md border font-medium ${
+                      className={`inline-flex items-center px-2 py-0.5 rounded ${
                         isSignature
-                          ? 'bg-[#FDF4E5] text-[#8C5D1F] border-[#F2D7A5]'
-                          : 'bg-[#EDE4D5] text-[#5C5042] border-[#DDD1BE]'
+                          ? 'bg-[#362C21] text-[#BD9557] font-semibold border border-[#BD9557]/40'
+                          : 'bg-[#2D2721] text-[#8C8070] border border-[#3A3229]'
                       }`}
                     >
                       {isSignature && <Sparkles className="w-3 h-3 me-1" />}
@@ -115,24 +112,24 @@ export default function ProductDetailModal({
 
             <h3
               id="modal-product-title"
-              className="text-xl sm:text-2xl font-bold text-[#1A1815] leading-snug"
+              className="text-xl sm:text-2xl font-serif text-[#EAE3D7] leading-snug font-normal"
             >
               {getLocalizedText(product.name, language)}
             </h3>
 
             {product.origin && (
-              <p className="text-xs font-semibold text-[#8C5D1F] mt-1">
+              <p className="text-xs text-[#BD9557] font-light mt-1">
                 {getLocalizedText(product.origin, language)}
               </p>
             )}
           </div>
 
           {/* Price Bar */}
-          <div className="flex items-center justify-between p-3 rounded-xl bg-[#F0E8DC] border border-[#E2D5C1]">
-            <span className="text-xs font-medium text-[#736352]">
+          <div className="flex items-center justify-between p-3 rounded bg-[#2D2721] border border-[#3A3229]">
+            <span className="text-xs font-serif text-[#8C8070]">
               {t.price}
             </span>
-            <span className="text-lg sm:text-xl font-black text-[#8C5D1F]">
+            <span className="text-lg font-mono font-bold text-[#EAE3D7]">
               {formatPrice(product.price, language)}
             </span>
           </div>
@@ -140,10 +137,10 @@ export default function ProductDetailModal({
           {/* Full Description */}
           {product.description && (
             <div className="space-y-1">
-              <h4 className="text-xs font-bold text-[#5C5042] uppercase tracking-wider">
+              <h4 className="text-xs font-serif text-[#8C8070] tracking-wider">
                 {t.ingredients}
               </h4>
-              <p className="text-xs sm:text-sm text-[#3E342B] leading-relaxed font-normal bg-white p-3 rounded-xl border border-[#E9E0D0]">
+              <p className="text-xs sm:text-sm text-[#C4B7A5] leading-relaxed font-normal bg-[#2A241E] p-3 rounded border border-[#352D25]">
                 {getLocalizedText(product.description, language)}
               </p>
             </div>
@@ -151,9 +148,9 @@ export default function ProductDetailModal({
 
           {/* Curated Note if exists */}
           {product.curatedNote && (
-            <div className="p-3 rounded-xl bg-[#FBF3E6] border border-[#EED7B2] flex items-start gap-2.5">
-              <Sparkles className="w-4 h-4 text-[#8C5D1F] shrink-0 mt-0.5" />
-              <p className="text-xs text-[#6B502C] leading-relaxed">
+            <div className="p-3 rounded bg-[#2D261E] border border-[#BD9557]/30 flex items-start gap-2.5">
+              <Sparkles className="w-4 h-4 text-[#BD9557] shrink-0 mt-0.5" />
+              <p className="text-xs text-[#C9B9A3] leading-relaxed">
                 {getLocalizedText(product.curatedNote, language)}
               </p>
             </div>
@@ -162,22 +159,22 @@ export default function ProductDetailModal({
           {/* Quick Metrics: Prep time, Calories */}
           <div className="grid grid-cols-2 gap-2.5 pt-1">
             {product.prepTimeMinutes && (
-              <div className="flex items-center gap-2 p-2.5 rounded-lg bg-white border border-[#E9E0D0]">
-                <Clock className="w-4 h-4 text-[#8C5D1F]" />
+              <div className="flex items-center gap-2 p-2.5 rounded bg-[#2A241E] border border-[#352D25]">
+                <Clock className="w-4 h-4 text-[#BD9557]" />
                 <div className="text-start">
-                  <div className="text-[10px] text-[#8C7C6B]">{t.prepTime}</div>
-                  <div className="text-xs font-bold text-[#1A1815]">
+                  <div className="text-[10px] text-[#7D7162]">{t.prepTime}</div>
+                  <div className="text-xs font-mono font-medium text-[#EAE3D7]">
                     ~{formatNumber(product.prepTimeMinutes, language)} {t.minutes}
                   </div>
                 </div>
               </div>
             )}
             {product.calories && (
-              <div className="flex items-center gap-2 p-2.5 rounded-lg bg-white border border-[#E9E0D0]">
-                <Flame className="w-4 h-4 text-[#A34836]" />
+              <div className="flex items-center gap-2 p-2.5 rounded bg-[#2A241E] border border-[#352D25]">
+                <Flame className="w-4 h-4 text-[#C27365]" />
                 <div className="text-start">
-                  <div className="text-[10px] text-[#8C7C6B]">{t.calories}</div>
-                  <div className="text-xs font-bold text-[#1A1815]">
+                  <div className="text-[10px] text-[#7D7162]">{t.calories}</div>
+                  <div className="text-xs font-mono font-medium text-[#EAE3D7]">
                     ~{formatNumber(product.calories, language)} kcal
                   </div>
                 </div>
@@ -185,21 +182,21 @@ export default function ProductDetailModal({
             )}
           </div>
 
-          {/* Future Ordering / Customization Ready Section */}
+          {/* Customization Preview */}
           {product.customizationGroups && product.customizationGroups.length > 0 && (
-            <div className="p-3.5 rounded-xl bg-[#F7F2E8] border border-[#E5DAC8] space-y-2">
-              <div className="flex items-center gap-1.5 text-xs font-bold text-[#5C5042]">
-                <Layers className="w-3.5 h-3.5 text-[#8C5D1F]" />
+            <div className="p-3 rounded bg-[#2A241E] border border-[#352D25] space-y-2">
+              <div className="flex items-center gap-1.5 text-xs font-serif text-[#C4B7A5]">
+                <Layers className="w-3.5 h-3.5 text-[#BD9557]" />
                 <span>{t.customizationPreview}</span>
               </div>
               <div className="space-y-1.5">
                 {product.customizationGroups.map((group) => (
-                  <div key={group.id} className="text-xs text-[#4A4035]">
-                    <span className="font-semibold text-[#1A1815]">
+                  <div key={group.id} className="text-xs text-[#9E9180]">
+                    <span className="font-medium text-[#EAE3D7]">
                       {getLocalizedText(group.title, language)}:{' '}
                     </span>
                     {group.options.map((opt, idx) => (
-                      <span key={opt.id} className="text-[#6A5B4D]">
+                      <span key={opt.id} className="text-[#8C8070]">
                         {getLocalizedText(opt.name, language)}
                         {idx < group.options.length - 1 ? ' · ' : ''}
                       </span>
@@ -207,21 +204,18 @@ export default function ProductDetailModal({
                   </div>
                 ))}
               </div>
-              <p className="text-[11px] text-[#8C7C6B] italic">
-                {t.customizationNotice}
-              </p>
             </div>
           )}
 
           {/* Table Service Hospitality Notice */}
-          <div className="p-3 rounded-xl bg-[#1A1815] text-[#FAF7F2] text-xs flex items-center justify-between">
+          <div className="p-3 rounded bg-[#1C1815] text-[#C4B7A5] text-xs flex items-center justify-between border border-[#352D25]">
             <div className="flex items-center gap-2">
-              <HeartHandshake className="w-4 h-4 text-[#D4A359]" />
+              <HeartHandshake className="w-4 h-4 text-[#BD9557]" />
               <span>{t.orderNotice}</span>
             </div>
             <button
               onClick={onClose}
-              className="px-3 py-1 bg-[#D4A359] hover:bg-[#C8933F] text-[#1A1815] font-bold text-xs rounded-lg transition-colors cursor-pointer"
+              className="px-3 py-1 bg-[#3A3229] hover:bg-[#4D4236] text-[#EAE3D7] text-xs rounded transition-colors cursor-pointer border border-[#4D4236]"
             >
               {t.close}
             </button>

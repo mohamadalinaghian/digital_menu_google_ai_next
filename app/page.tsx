@@ -157,7 +157,7 @@ export default function ChinoDigitalMenuPage() {
 
   return (
     <div
-      className="min-h-screen flex flex-col bg-[#FAF7F2] text-[#1F1C18]"
+      className="min-h-screen flex flex-col bg-[#211E1B] text-[#EAE3D7] bg-chino-pattern selection:bg-[#BD9557]/30 selection:text-[#FAF7F2]"
       dir={isRtl ? 'rtl' : 'ltr'}
     >
       <StructuredData />
@@ -202,17 +202,17 @@ export default function ChinoDigitalMenuPage() {
       />
 
       {/* 5. Main Menu Sections */}
-      <main className="flex-1 max-w-4xl w-full mx-auto px-4 sm:px-6 py-6 space-y-10">
+      <main className="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 py-6 space-y-10">
         {/* If no items match current search or filters */}
         {filteredProducts.length === 0 ? (
-          <div className="text-center py-16 px-4 bg-[#FFFFFF] rounded-2xl border border-[#E9E1D2] shadow-xs my-6">
-            <div className="w-12 h-12 rounded-full bg-[#F4EDE2] text-[#8C5D1F] mx-auto flex items-center justify-center mb-3">
+          <div className="text-center py-16 px-4 bg-[#26221E] rounded-lg border border-[#352D25] my-6">
+            <div className="w-12 h-12 rounded-full bg-[#302821] text-[#BD9557] mx-auto flex items-center justify-center mb-3">
               <SearchX className="w-6 h-6" />
             </div>
-            <h3 className="text-base font-bold text-[#1A1815] mb-1">
+            <h3 className="text-base font-serif text-[#EAE3D7] mb-1 font-normal">
               {t.noResultsTitle}
             </h3>
-            <p className="text-xs text-[#7A6B5B] max-w-xs mx-auto mb-4">
+            <p className="text-xs text-[#8E8272] max-w-xs mx-auto mb-4 font-light">
               {t.noResultsDesc}
             </p>
             <button
@@ -220,7 +220,7 @@ export default function ChinoDigitalMenuPage() {
                 setSearchQuery('');
                 setSelectedTag(null);
               }}
-              className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#1A1815] hover:bg-[#2C2722] text-[#FAF7F2] text-xs font-semibold rounded-xl transition-colors cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#3A3229] hover:bg-[#4D4236] text-[#EAE3D7] text-xs rounded transition-colors cursor-pointer border border-[#4D4236]"
             >
               <span>{t.resetSearch}</span>
             </button>
@@ -235,24 +235,21 @@ export default function ChinoDigitalMenuPage() {
                 key={category.id}
                 id={`category-section-${category.id}`}
                 data-category-id={category.id}
-                className="scroll-mt-16"
+                className="scroll-mt-14"
               >
                 {/* Category Header */}
-                <div className="mb-4 pb-2 border-b border-[#E6DEC8] flex items-end justify-between">
+                <div className="mb-4 pb-2 border-b border-[#332C25] flex items-baseline justify-between">
                   <div>
-                    <div className="flex items-center gap-2 mb-0.5">
-                      <span className="w-2 h-2 rounded-full bg-[#C8933F]" />
-                      <h3 className="text-lg sm:text-xl font-extrabold text-[#1A1815] tracking-tight">
-                        {getLocalizedText(category.title, language)}
-                      </h3>
-                    </div>
+                    <h2 className="text-base sm:text-lg font-serif text-[#EAE3D7] tracking-wide font-medium">
+                      {getLocalizedText(category.title, language)}
+                    </h2>
                     {category.subtitle && (
-                      <p className="text-xs text-[#7A6B5B] font-light leading-relaxed">
+                      <p className="text-xs text-[#8E8272] font-light leading-relaxed mt-0.5">
                         {getLocalizedText(category.subtitle, language)}
                       </p>
                     )}
                   </div>
-                  <span className="text-[11px] text-[#A0907E] font-mono px-2 py-0.5 rounded-md bg-[#EDE4D5]">
+                  <span className="text-[10px] text-[#7D7162] font-mono">
                     {items.length} {t.itemsCount}
                   </span>
                 </div>

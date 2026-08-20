@@ -4,7 +4,7 @@ import React from 'react';
 import { Language, VenueInfo } from '@/types/menu';
 import { translations } from '@/lib/i18n';
 import { getLocalizedText } from '@/lib/utils';
-import { Globe, Sparkles, Image as ImageIcon, FileText, Search, MapPin, Clock } from 'lucide-react';
+import { Image as ImageIcon, FileText, Search } from 'lucide-react';
 
 interface BrandHeaderProps {
   venue: VenueInfo;
@@ -26,18 +26,17 @@ export default function BrandHeader({
   const t = translations[language];
 
   return (
-    <header className="relative bg-[#1A1815] text-[#FAF7F2] border-b border-[#2C2722] overflow-hidden">
-      {/* Subtle architectural nostalgic accent line at the very top */}
-      <div className="h-1 w-full bg-gradient-to-r from-[#9B6A28] via-[#D4A359] to-[#9B6A28]" />
+    <header className="relative bg-[#1C1916] text-[#EAE3D7] border-b border-[#2E2822] transition-colors">
+      {/* Delicate warm bronze hairline indicator */}
+      <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-[#BD9557]/40 to-transparent" />
 
-      <div className="max-w-4xl mx-auto px-4 pt-5 pb-6 sm:px-6">
-        {/* Top utility row: Status, Language Switcher, View Mode */}
-        <div className="flex items-center justify-between gap-3 text-xs mb-4">
-          {/* Status badge */}
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#28231D] text-[#D8C7B0] border border-[#3D352B]">
-            <span className="w-2 h-2 rounded-full bg-[#52B788] animate-pulse inline-block" />
-            <span className="font-medium tracking-tight">{t.openNow}</span>
-            <span className="text-[#8E8070] hidden sm:inline">· {t.closedNow}</span>
+      <div className="max-w-5xl mx-auto px-4 pt-4 pb-5 sm:px-6">
+        {/* Top utility row: Status & Discreet Controls */}
+        <div className="flex items-center justify-between gap-3 text-xs mb-3">
+          {/* Calm status indicator */}
+          <div className="inline-flex items-center gap-1.5 text-[11px] text-[#A09484]">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#BD9557]" />
+            <span className="font-normal tracking-wide">{t.openNow}</span>
           </div>
 
           {/* Quick Controls: Search, View Mode, Language */}
@@ -46,118 +45,98 @@ export default function BrandHeader({
             <button
               id="header-search-btn"
               onClick={onSearchClick}
-              className="p-1.5 sm:px-2.5 sm:py-1 rounded-lg bg-[#28231D] hover:bg-[#352F27] border border-[#3D352B] text-[#D8C7B0] transition-colors flex items-center gap-1.5 cursor-pointer"
+              className="p-1.5 sm:px-2.5 sm:py-1 rounded bg-[#27221D] hover:bg-[#322C25] border border-[#383027] text-[#C4B7A5] transition-colors flex items-center gap-1.5 cursor-pointer"
               title={t.searchAriaLabel}
               aria-label={t.searchAriaLabel}
             >
-              <Search className="w-3.5 h-3.5 text-[#D4A359]" />
-              <span className="hidden md:inline">{t.searchAriaLabel}</span>
+              <Search className="w-3.5 h-3.5 text-[#BD9557]" />
+              <span className="hidden md:inline text-[11px]">{t.searchAriaLabel}</span>
             </button>
 
             {/* View Mode Toggle (Photo vs Editorial) */}
-            <div className="flex items-center bg-[#28231D] rounded-lg p-0.5 border border-[#3D352B]">
+            <div className="flex items-center bg-[#27221D] rounded p-0.5 border border-[#383027]">
               <button
                 id="viewmode-photo-btn"
                 onClick={() => onViewModeChange('photo')}
-                className={`p-1.5 rounded-md transition-all flex items-center gap-1 text-[11px] font-medium cursor-pointer ${
+                className={`p-1.5 rounded transition-all flex items-center gap-1 text-[11px] font-medium cursor-pointer ${
                   viewMode === 'photo'
-                    ? 'bg-[#D4A359] text-[#1A1815] shadow-xs'
-                    : 'text-[#A89A88] hover:text-[#FAF7F2]'
+                    ? 'bg-[#3A322A] text-[#EAE3D7]'
+                    : 'text-[#8A7E70] hover:text-[#C4B7A5]'
                 }`}
                 title={t.photoModeTooltip}
                 aria-label={t.viewModePhoto}
               >
                 <ImageIcon className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline">{t.viewModePhoto}</span>
+                <span className="hidden sm:inline text-[10px]">{t.viewModePhoto}</span>
               </button>
               <button
                 id="viewmode-editorial-btn"
                 onClick={() => onViewModeChange('editorial')}
-                className={`p-1.5 rounded-md transition-all flex items-center gap-1 text-[11px] font-medium cursor-pointer ${
+                className={`p-1.5 rounded transition-all flex items-center gap-1 text-[11px] font-medium cursor-pointer ${
                   viewMode === 'editorial'
-                    ? 'bg-[#D4A359] text-[#1A1815] shadow-xs'
-                    : 'text-[#A89A88] hover:text-[#FAF7F2]'
+                    ? 'bg-[#3A322A] text-[#EAE3D7]'
+                    : 'text-[#8A7E70] hover:text-[#C4B7A5]'
                 }`}
                 title={t.editorialModeTooltip}
                 aria-label={t.viewModeEditorial}
               >
                 <FileText className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline">{t.viewModeEditorial}</span>
+                <span className="hidden sm:inline text-[10px]">{t.viewModeEditorial}</span>
               </button>
             </div>
 
-            {/* Language Selector */}
-            <div className="flex items-center bg-[#28231D] rounded-lg p-0.5 border border-[#3D352B]">
+            {/* Discreet Language Selector */}
+            <div className="flex items-center gap-1 text-[11px] font-mono tracking-wider bg-[#27221D] px-2 py-1 rounded border border-[#383027]">
               <button
                 id="lang-fa-btn"
                 onClick={() => onLanguageChange('fa')}
-                className={`px-2 py-1 rounded-md text-[11px] font-bold transition-all cursor-pointer ${
+                className={`transition-colors cursor-pointer px-1 ${
                   language === 'fa'
-                    ? 'bg-[#FAF7F2] text-[#1A1815]'
-                    : 'text-[#A89A88] hover:text-[#FAF7F2]'
+                    ? 'text-[#BD9557] font-bold'
+                    : 'text-[#8A7E70] hover:text-[#EAE3D7]'
                 }`}
               >
-                فا
+                FA
               </button>
+              <span className="text-[#443B31]">/</span>
               <button
                 id="lang-en-btn"
                 onClick={() => onLanguageChange('en')}
-                className={`px-2 py-1 rounded-md text-[11px] font-bold transition-all cursor-pointer ${
+                className={`transition-colors cursor-pointer px-1 ${
                   language === 'en'
-                    ? 'bg-[#FAF7F2] text-[#1A1815]'
-                    : 'text-[#A89A88] hover:text-[#FAF7F2]'
+                    ? 'text-[#BD9557] font-bold'
+                    : 'text-[#8A7E70] hover:text-[#EAE3D7]'
                 }`}
               >
                 EN
               </button>
+              <span className="text-[#443B31]">/</span>
               <button
                 id="lang-ar-btn"
                 onClick={() => onLanguageChange('ar')}
-                className={`px-2 py-1 rounded-md text-[11px] font-bold transition-all cursor-pointer ${
+                className={`transition-colors cursor-pointer px-1 ${
                   language === 'ar'
-                    ? 'bg-[#FAF7F2] text-[#1A1815]'
-                    : 'text-[#A89A88] hover:text-[#FAF7F2]'
+                    ? 'text-[#BD9557] font-bold'
+                    : 'text-[#8A7E70] hover:text-[#EAE3D7]'
                 }`}
               >
-                ع
+                AR
               </button>
             </div>
           </div>
         </div>
 
         {/* Brand identity center presentation */}
-        <div className="text-center pt-2 pb-1">
-          {/* Subtle ornamental crest */}
-          <div className="inline-flex items-center justify-center gap-2 mb-2">
-            <span className="h-px w-8 bg-gradient-to-r from-transparent to-[#D4A359]/60" />
-            <span className="text-[#D4A359] text-[10px] tracking-widest uppercase font-semibold">
-              {getLocalizedText(venue.city, language)} · EST. 2022
-            </span>
-            <span className="h-px w-8 bg-gradient-to-l from-transparent to-[#D4A359]/60" />
-          </div>
-
+        <div className="text-center pt-1 pb-1">
           {/* Primary Wordmark */}
-          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#FAF7F2] mb-1.5">
+          <h1 className="text-3xl sm:text-4xl font-serif tracking-widest text-[#EAE3D7] mb-1 font-normal">
             {getLocalizedText(venue.name, language)}
           </h1>
 
-          {/* Tagline */}
-          <p className="text-xs sm:text-sm text-[#C4B59F] font-light max-w-md mx-auto leading-relaxed">
+          {/* Subtitle / Tagline with quiet Iranian warmth */}
+          <p className="text-xs text-[#9E9383] font-light max-w-sm mx-auto leading-relaxed">
             {getLocalizedText(venue.tagline, language)}
           </p>
-
-          {/* Location & Quick Context Pill */}
-          <div className="mt-3 flex items-center justify-center gap-4 text-[11px] text-[#A89A88]">
-            <span className="inline-flex items-center gap-1">
-              <MapPin className="w-3 h-3 text-[#D4A359]" />
-              {getLocalizedText(venue.city, language)} · فردوسی
-            </span>
-            <span className="text-[#4E4437]">|</span>
-            <span className="inline-flex items-center gap-1">
-              <Clock className="w-3 h-3 text-[#D4A359]" />
-              ۸:۳۰ – ۲۳:۳۰
-            </span>
-          </div>
         </div>
       </div>
     </header>
