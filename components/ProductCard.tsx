@@ -3,8 +3,8 @@
 import React from 'react';
 import Image from 'next/image';
 import { Product, Tag, Language } from '@/types/menu';
-import { formatPrice, getLocalizedText } from '@/lib/utils';
-import { Sparkles, Clock } from 'lucide-react';
+import { formatPrice, getLocalizedText, formatNumber } from '@/lib/utils';
+import { Sparkles, Clock, ArrowLeft, ArrowRight } from 'lucide-react';
 
 interface ProductCardProps {
   product: Product;
@@ -23,6 +23,7 @@ export default function ProductCard({
 }: ProductCardProps) {
   const isRtl = language !== 'en';
   const hasImage = Boolean(product.image && viewMode === 'photo');
+  const isLongPrep = Boolean(product.prepTimeMinutes && product.prepTimeMinutes > 10);
 
   return (
     <article
@@ -36,38 +37,38 @@ export default function ProductCard({
           onSelect(product);
         }
       }}
-      className="group relative bg-[#26221E] rounded-lg p-3.5 sm:p-4 border border-[#352D25] hover:border-[#4D4236] transition-all duration-200 cursor-pointer flex flex-col justify-between"
+      className="group relative bg-[#26211C] hover:bg-[#2D2721] rounded-lg p-3 sm:p-3.5 border border-[#352D25] hover:border-[#BD9557]/50 transition-all duration-200 cursor-pointer flex flex-col justify-between shadow-xs"
     >
       <div className="flex gap-3 sm:gap-4">
         {/* Text Details Area */}
         <div className="flex-1 min-w-0">
-          {/* Header Row: Title & Price separated by dotted leader */}
-          <div className="flex items-baseline justify-between gap-2 border-b border-dotted border-[#42372D] pb-1.5 mb-1.5">
-            <h3 className="font-serif text-sm sm:text-base text-[#EAE3D7] group-hover:text-[#BD9557] transition-colors leading-snug font-normal">
+          {/* Header Row: Title & Price */}
+          <div className="flex items-baseline justify-between gap-2 border-b border-dotted border-[#3D3328] pb-1.5 mb-1.5">
+            <h3 className="font-serif text-sm sm:text-base text-[#FAF6F0] font-semibold group-hover:text-[#BD9557] transition-colors leading-snug">
               {getLocalizedText(product.name, language)}
             </h3>
-            <span className="font-mono text-xs sm:text-sm font-medium text-[#D5C9B8] shrink-0">
+            <span className="font-mono text-xs sm:text-sm font-bold text-[#E2D6C5] shrink-0">
               {formatPrice(product.price, language)}
             </span>
           </div>
 
           {/* Optional Origin or Short Note */}
           {product.origin && (
-            <p className="text-[11px] text-[#BD9557] font-light mb-1">
+            <p className="text-[11px] text-[#BD9557] font-normal mb-1">
               {getLocalizedText(product.origin, language)}
             </p>
           )}
 
-          {/* Description */}
+          {/* Description with comfortable Persian line-height (1.9-2.0) */}
           {product.description && (
-            <p className="text-xs text-[#9E9180] leading-relaxed line-clamp-2 sm:line-clamp-3 mb-2 font-normal">
+            <p className="text-xs text-[#A89C8C] leading-[1.9] line-clamp-2 sm:line-clamp-3 mb-2 font-normal">
               {getLocalizedText(product.description, language)}
             </p>
           )}
 
-          {/* Quiet Informational Tags */}
+          {/* Quiet Informational Tags (Readable text labels, not clickable chips) */}
           {product.tags && product.tags.length > 0 && (
-            <div className="flex flex-wrap items-center gap-1.5 text-[10px] text-[#7D7162] font-mono">
+            <div className="flex flex-wrap items-center gap-1.5 text-[10px] text-[#8C8070] font-mono">
               {product.tags.slice(0, 3).map((tagId, idx, arr) => {
                 const tag = tagsMap[tagId];
                 if (!tag) return null;
@@ -94,31 +95,39 @@ export default function ProductCard({
 
         {/* Thumbnail Image (Photo Mode Only) */}
         {hasImage && product.image && (
-          <div className="flex-none relative w-18 h-18 sm:w-22 sm:h-22 rounded overflow-hidden bg-[#1E1A17] border border-[#352D25]">
+          <div className="flex-none relative w-18 h-18 sm:w-20 sm:h-20 rounded-md overflow-hidden bg-[#1E1A17] border border-[#352D25]">
             <Image
               src={product.image}
               alt={getLocalizedText(product.imageAlt || product.name, language)}
               fill
-              sizes="(max-width: 640px) 72px, 88px"
-              className="object-cover group-hover:scale-103 transition-transform duration-500 opacity-90 group-hover:opacity-100"
+              sizes="(max-width: 640px) 72px, 80px"
+              className="object-cover group-hover:scale-105 transition-transform duration-300 opacity-90 group-hover:opacity-100"
               referrerPolicy="no-referrer"
             />
           </div>
         )}
       </div>
 
-      {/* Subtle bottom detail hint */}
-      {product.prepTimeMinutes && (
-        <div className="pt-2 mt-2 border-t border-[#312921] flex items-center justify-between text-[10px] text-[#736758]">
-          <span className="inline-flex items-center gap-1">
-            <Clock className="w-2.5 h-2.5" />
-            ~{product.prepTimeMinutes} {language === 'en' ? 'min' : 'دقیقه'}
+      {/* Card Footer: Long-prep indicator (only if >10 min) and Details Link */}
+      <div className="pt-2 mt-2 border-t border-[#312921] flex items-center justify-between text-[10px]">
+        {isLongPrep ? (
+          <span className="inline-flex items-center gap-1 text-[#9E8B75]">
+            <Clock className="w-3 h-3 text-[#BD9557]" />
+            <span>±{formatNumber(product.prepTimeMinutes!, language)} {language === 'en' ? 'min' : 'دقیقه'}</span>
           </span>
-          <span className="text-[#8A7E70] group-hover:text-[#BD9557] transition-colors">
-            {language === 'en' ? 'Details' : 'جزئیات'}
-          </span>
-        </div>
-      )}
+        ) : (
+          <span />
+        )}
+        <span className="text-[#8E806F] group-hover:text-[#BD9557] transition-colors flex items-center gap-0.5 font-medium">
+          <span>{language === 'en' ? 'Details' : 'جزئیات'}</span>
+          {isRtl ? (
+            <ArrowLeft className="w-3 h-3 group-hover:-translate-x-0.5 transition-transform" />
+          ) : (
+            <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+          )}
+        </span>
+      </div>
     </article>
   );
 }
+

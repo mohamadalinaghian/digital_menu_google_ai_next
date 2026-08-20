@@ -45,12 +45,12 @@ export default function CategoryNav({
   return (
     <nav
       aria-label="Category Navigation"
-      className="sticky top-0 z-30 bg-[#211E1B]/95 backdrop-blur-md border-b border-[#332C25] shadow-sm transition-colors"
+      className="sticky top-[52px] z-30 bg-[#1E1A16]/95 backdrop-blur-md border-b border-[#302821] shadow-xs transition-colors"
     >
-      <div className="max-w-5xl mx-auto px-4 sm:px-6">
+      <div className="max-w-5xl mx-auto px-3 sm:px-6">
         <div
           ref={containerRef}
-          className="flex items-center gap-2 sm:gap-4 overflow-x-auto no-scrollbar py-2.5 scroll-smooth"
+          className="flex items-center gap-1 sm:gap-3 overflow-x-auto no-scrollbar py-2 scroll-smooth"
         >
           {categories.map((cat) => {
             const isActive = cat.id === activeCategoryId;
@@ -61,10 +61,10 @@ export default function CategoryNav({
                 ref={isActive ? activeBtnRef : null}
                 id={`cat-nav-${cat.id}`}
                 onClick={() => onSelectCategory(cat.id)}
-                className={`relative flex-none py-1.5 px-2.5 sm:px-3 text-xs font-serif whitespace-nowrap transition-all duration-200 cursor-pointer ${
+                className={`relative flex-none py-1.5 px-3 text-xs sm:text-[13px] font-serif whitespace-nowrap transition-all duration-200 cursor-pointer rounded-md ${
                   isActive
-                    ? 'text-[#EAE3D7] font-semibold'
-                    : 'text-[#8E8272] hover:text-[#C4B7A5]'
+                    ? 'text-[#FAF6F0] font-bold bg-[#2C241D]'
+                    : 'text-[#8E806F] hover:text-[#EAE3D7] hover:bg-[#251F1A]'
                 }`}
               >
                 <span>{getLocalizedText(cat.title, language)}</span>

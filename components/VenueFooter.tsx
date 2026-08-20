@@ -65,14 +65,25 @@ export default function VenueFooter({ venue, language }: VenueFooterProps) {
         {/* Info Grid: Address, Hours, Wi-Fi, Phone */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
           {/* Address & Hours */}
-          <div className="p-3.5 rounded bg-[#221D19] border border-[#302821] space-y-2">
+          <div className="p-3.5 rounded bg-[#221D19] border border-[#302821] space-y-2.5">
+            {/* Open status badge moved gracefully from header */}
+            <div className="flex items-center gap-1.5 pb-2 border-b border-[#2E2721] text-xs">
+              <span className="w-2 h-2 rounded-full bg-[#52B788] animate-pulse" />
+              <span className="text-[#EAE3D7] font-medium tracking-wide">
+                {t.openNow}
+              </span>
+              <span className="text-[11px] text-[#8E8272] ms-auto font-mono">
+                {getLocalizedText(venue.hours, language)}
+              </span>
+            </div>
+
             <div className="flex items-start gap-2 text-xs text-[#C4B7A5]">
               <MapPin className="w-3.5 h-3.5 text-[#BD9557] shrink-0 mt-0.5" />
               <span>{getLocalizedText(venue.address, language)}</span>
             </div>
             <div className="flex items-start gap-2 text-xs text-[#C4B7A5]">
               <Clock className="w-3.5 h-3.5 text-[#BD9557] shrink-0 mt-0.5" />
-              <span>{getLocalizedText(venue.hours, language)}</span>
+              <span>{t.hours}: {getLocalizedText(venue.hours, language)}</span>
             </div>
           </div>
 

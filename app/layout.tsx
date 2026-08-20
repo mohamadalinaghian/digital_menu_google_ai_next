@@ -31,7 +31,7 @@ export default function RootLayout({
         <meta name="theme-color" content="#1F1C18" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
       </head>
-      <body className="bg-tactile-paper text-[#1F1C18] antialiased selection:bg-[#C8933F]/20 selection:text-[#181513] min-h-screen" suppressHydrationWarning>
+      <body className="bg-[#211E1B] text-[#EAE3D7] antialiased selection:bg-[#BD9557]/30 selection:text-[#FAF7F2] min-h-screen" suppressHydrationWarning>
         {children}
       </body>
     </html>

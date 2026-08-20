@@ -1,49 +1,36 @@
-import { productsData, venueInfo } from "@/data/menu-data";
+import { productsData, venueInfo } from '@/data/menu';
 
 export default function StructuredData() {
   const schemaData = {
-    "@context": "https://schema.org",
-    "@type": "Restaurant",
+    '@context': 'https://schema.org',
+    '@type': 'Restaurant',
     name: venueInfo.name.fa,
-    alternateName: ["Chino Cafe", "کافه چینو شاهرود", "رستوران چینو"],
+    alternateName: [
+      venueInfo.name.en,
+      `کافه ${venueInfo.name.fa}`,
+      `رستوران ${venueInfo.name.fa}`,
+    ],
     description: venueInfo.description.fa,
     address: {
-      "@type": "PostalAddress",
-      streetAddress: "خیابان فردوسی، نبش کوچه یاس",
-      addressLocality: "شاهرود",
-      addressRegion: "سمنان",
-      addressCountry: "IR",
+      '@type': 'PostalAddress',
+      streetAddress: venueInfo.address.fa,
+      addressLocality: venueInfo.city.fa,
+      addressCountry: 'IR',
     },
     telephone: venueInfo.phone,
-    servesCuisine: ["Café", "Specialty Coffee", "Persian Traditional Infusions", "Pastry", "Brunch"],
-    priceRange: "$$",
-    openingHoursSpecification: [
-      {
-        "@type": "OpeningHoursSpecification",
-        dayOfWeek: [
-          "Monday",
-          "Tuesday",
-          "Wednesday",
-          "Thursday",
-          "Friday",
-          "Saturday",
-          "Sunday",
-        ],
-        opens: "08:30",
-        closes: "23:30",
-      },
-    ],
+    servesCuisine: ['Café', 'Coffee', 'Tea', 'Pastry'],
+    priceRange: '$$',
     hasMenu: {
-      "@type": "Menu",
-      name: "منوی کافه و رستوران چینو",
-      hasMenuItem: productsData.slice(0, 10).map((product) => ({
-        "@type": "MenuItem",
+      '@type': 'Menu',
+      name: `منوی دیجیتال ${venueInfo.name.fa}`,
+      hasMenuItem: productsData.map((product) => ({
+        '@type': 'MenuItem',
         name: product.name.fa,
-        description: product.description?.fa || "",
+        description: product.description?.fa || '',
         offers: {
-          "@type": "Offer",
+          '@type': 'Offer',
           price: product.price,
-          priceCurrency: "IRR",
+          priceCurrency: 'IRR',
         },
       })),
     },

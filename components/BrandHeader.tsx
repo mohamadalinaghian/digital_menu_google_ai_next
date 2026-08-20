@@ -4,7 +4,12 @@ import React from 'react';
 import { Language, VenueInfo } from '@/types/menu';
 import { translations } from '@/lib/i18n';
 import { getLocalizedText } from '@/lib/utils';
-import { Image as ImageIcon, FileText, Search } from 'lucide-react';
+import {
+  Search,
+  Grid,
+  List,
+  SlidersHorizontal,
+} from 'lucide-react';
 
 interface BrandHeaderProps {
   venue: VenueInfo;
@@ -13,6 +18,10 @@ interface BrandHeaderProps {
   viewMode: 'photo' | 'editorial';
   onViewModeChange: (mode: 'photo' | 'editorial') => void;
   onSearchClick: () => void;
+  isSearchActive?: boolean;
+  onFilterClick?: () => void;
+  isFilterActive?: boolean;
+  activeFilterCount?: number;
 }
 
 export default function BrandHeader({
@@ -22,121 +31,127 @@ export default function BrandHeader({
   viewMode,
   onViewModeChange,
   onSearchClick,
+  isSearchActive = false,
+  onFilterClick,
+  isFilterActive = false,
+  activeFilterCount = 0,
 }: BrandHeaderProps) {
   const t = translations[language];
 
   return (
-    <header className="relative bg-[#1C1916] text-[#EAE3D7] border-b border-[#2E2822] transition-colors">
-      {/* Delicate warm bronze hairline indicator */}
-      <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-[#BD9557]/40 to-transparent" />
-
-      <div className="max-w-5xl mx-auto px-4 pt-4 pb-5 sm:px-6">
-        {/* Top utility row: Status & Discreet Controls */}
-        <div className="flex items-center justify-between gap-3 text-xs mb-3">
-          {/* Calm status indicator */}
-          <div className="inline-flex items-center gap-1.5 text-[11px] text-[#A09484]">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#BD9557]" />
-            <span className="font-normal tracking-wide">{t.openNow}</span>
-          </div>
-
-          {/* Quick Controls: Search, View Mode, Language */}
-          <div className="flex items-center gap-1.5 sm:gap-2">
-            {/* Search shortcut button */}
-            <button
-              id="header-search-btn"
-              onClick={onSearchClick}
-              className="p-1.5 sm:px-2.5 sm:py-1 rounded bg-[#27221D] hover:bg-[#322C25] border border-[#383027] text-[#C4B7A5] transition-colors flex items-center gap-1.5 cursor-pointer"
-              title={t.searchAriaLabel}
-              aria-label={t.searchAriaLabel}
-            >
-              <Search className="w-3.5 h-3.5 text-[#BD9557]" />
-              <span className="hidden md:inline text-[11px]">{t.searchAriaLabel}</span>
-            </button>
-
-            {/* View Mode Toggle (Photo vs Editorial) */}
-            <div className="flex items-center bg-[#27221D] rounded p-0.5 border border-[#383027]">
-              <button
-                id="viewmode-photo-btn"
-                onClick={() => onViewModeChange('photo')}
-                className={`p-1.5 rounded transition-all flex items-center gap-1 text-[11px] font-medium cursor-pointer ${
-                  viewMode === 'photo'
-                    ? 'bg-[#3A322A] text-[#EAE3D7]'
-                    : 'text-[#8A7E70] hover:text-[#C4B7A5]'
-                }`}
-                title={t.photoModeTooltip}
-                aria-label={t.viewModePhoto}
-              >
-                <ImageIcon className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline text-[10px]">{t.viewModePhoto}</span>
-              </button>
-              <button
-                id="viewmode-editorial-btn"
-                onClick={() => onViewModeChange('editorial')}
-                className={`p-1.5 rounded transition-all flex items-center gap-1 text-[11px] font-medium cursor-pointer ${
-                  viewMode === 'editorial'
-                    ? 'bg-[#3A322A] text-[#EAE3D7]'
-                    : 'text-[#8A7E70] hover:text-[#C4B7A5]'
-                }`}
-                title={t.editorialModeTooltip}
-                aria-label={t.viewModeEditorial}
-              >
-                <FileText className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline text-[10px]">{t.viewModeEditorial}</span>
-              </button>
-            </div>
-
-            {/* Discreet Language Selector */}
-            <div className="flex items-center gap-1 text-[11px] font-mono tracking-wider bg-[#27221D] px-2 py-1 rounded border border-[#383027]">
-              <button
-                id="lang-fa-btn"
-                onClick={() => onLanguageChange('fa')}
-                className={`transition-colors cursor-pointer px-1 ${
-                  language === 'fa'
-                    ? 'text-[#BD9557] font-bold'
-                    : 'text-[#8A7E70] hover:text-[#EAE3D7]'
-                }`}
-              >
-                FA
-              </button>
-              <span className="text-[#443B31]">/</span>
-              <button
-                id="lang-en-btn"
-                onClick={() => onLanguageChange('en')}
-                className={`transition-colors cursor-pointer px-1 ${
-                  language === 'en'
-                    ? 'text-[#BD9557] font-bold'
-                    : 'text-[#8A7E70] hover:text-[#EAE3D7]'
-                }`}
-              >
-                EN
-              </button>
-              <span className="text-[#443B31]">/</span>
-              <button
-                id="lang-ar-btn"
-                onClick={() => onLanguageChange('ar')}
-                className={`transition-colors cursor-pointer px-1 ${
-                  language === 'ar'
-                    ? 'text-[#BD9557] font-bold'
-                    : 'text-[#8A7E70] hover:text-[#EAE3D7]'
-                }`}
-              >
-                AR
-              </button>
-            </div>
-          </div>
+    <header className="sticky top-0 z-40 bg-[#1A1714] text-[#EAE3D7] border-b border-[#2E2822] shadow-xs">
+      {/* 52px Compact Single Row Bar */}
+      <div className="max-w-5xl mx-auto px-3 sm:px-6 h-[52px] flex items-center justify-between gap-2">
+        {/* Brand Wordmark & Local Shahroud Geographic Resonance (#3 restored) */}
+        <div className="flex items-center gap-2 select-none min-w-0">
+          <a
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            className="flex items-baseline gap-2 group cursor-pointer"
+            aria-label="Chino Cafe - Return to top"
+          >
+            <h1 className="text-xl sm:text-2xl font-serif font-bold tracking-wide text-[#FAF6F0] group-hover:text-[#BD9557] transition-colors leading-none">
+              {getLocalizedText(venue.name, language)}
+            </h1>
+            <span className="text-[10px] font-mono tracking-widest text-[#9E8B75] uppercase hidden xs:inline">
+              {getLocalizedText(venue.city, language) || 'شاهرود'}
+            </span>
+          </a>
         </div>
 
-        {/* Brand identity center presentation */}
-        <div className="text-center pt-1 pb-1">
-          {/* Primary Wordmark */}
-          <h1 className="text-3xl sm:text-4xl font-serif tracking-widest text-[#EAE3D7] mb-1 font-normal">
-            {getLocalizedText(venue.name, language)}
-          </h1>
+        {/* Action Controls: Search, Direct Filter Drawer, View Mode, Explicit Language (#1 & #5 restored) */}
+        <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
+          {/* 1. Search Icon Button */}
+          <button
+            id="header-search-btn"
+            onClick={onSearchClick}
+            className={`min-w-[40px] h-[40px] sm:min-w-[44px] sm:h-[44px] p-2 sm:p-2.5 rounded-lg flex items-center justify-center transition-colors cursor-pointer ${
+              isSearchActive
+                ? 'bg-[#362D23] text-[#BD9557] border border-[#BD9557]/40'
+                : 'text-[#C4B7A5] hover:text-[#FAF6F0] hover:bg-[#28231E]'
+            }`}
+            title={t.searchAriaLabel}
+            aria-label={t.searchAriaLabel}
+          >
+            <Search className="w-4 h-4 text-[#BD9557]" />
+          </button>
 
-          {/* Subtitle / Tagline with quiet Iranian warmth */}
-          <p className="text-xs text-[#9E9383] font-light max-w-sm mx-auto leading-relaxed">
-            {getLocalizedText(venue.tagline, language)}
-          </p>
+          {/* 2. Direct 1-Tap Filter Button with Active Badge (#5 restored) */}
+          {onFilterClick && (
+            <button
+              id="header-filter-btn"
+              onClick={onFilterClick}
+              className={`relative min-w-[40px] h-[40px] sm:min-w-[44px] sm:h-[44px] p-2 sm:p-2.5 rounded-lg flex items-center justify-center transition-colors cursor-pointer ${
+                isFilterActive
+                  ? 'bg-[#362D23] text-[#BD9557] border border-[#BD9557]/40'
+                  : 'text-[#C4B7A5] hover:text-[#FAF6F0] hover:bg-[#28231E]'
+              }`}
+              title={t.filterByTag}
+              aria-label={t.filterByTag}
+            >
+              <SlidersHorizontal className="w-4 h-4 text-[#BD9557]" />
+              {activeFilterCount > 0 && (
+                <span className="absolute top-1.5 end-1.5 w-2 h-2 rounded-full bg-[#BD9557] ring-2 ring-[#1A1714]" />
+              )}
+            </button>
+          )}
+
+          {/* 3. View Mode Toggle (Photo vs Editorial) */}
+          <button
+            id="header-viewmode-btn"
+            onClick={() =>
+              onViewModeChange(viewMode === 'photo' ? 'editorial' : 'photo')
+            }
+            className="min-w-[40px] h-[40px] sm:min-w-[44px] sm:h-[44px] p-2 sm:p-2.5 rounded-lg flex items-center justify-center text-[#C4B7A5] hover:text-[#FAF6F0] hover:bg-[#28231E] transition-colors cursor-pointer"
+            title={
+              viewMode === 'photo'
+                ? t.editorialModeTooltip
+                : t.photoModeTooltip
+            }
+            aria-label={
+              viewMode === 'photo'
+                ? t.viewModeEditorial
+                : t.viewModePhoto
+            }
+          >
+            {viewMode === 'photo' ? (
+              <List className="w-4 h-4 text-[#C4B7A5]" />
+            ) : (
+              <Grid className="w-4 h-4 text-[#BD9557]" />
+            )}
+          </button>
+
+          {/* 4. Explicit Multilingual Switcher: FA · EN · AR (#1 restored) */}
+          <div className="flex items-center bg-[#25201A] rounded-lg p-0.5 border border-[#3A3229]">
+            {(['fa', 'en', 'ar'] as Language[]).map((langCode) => {
+              const isActive = language === langCode;
+              return (
+                <button
+                  key={langCode}
+                  id={`lang-${langCode}-btn`}
+                  onClick={() => onLanguageChange(langCode)}
+                  className={`px-1.5 sm:px-2 py-1 rounded text-[11px] font-mono font-bold transition-all cursor-pointer ${
+                    isActive
+                      ? 'bg-[#3A3026] text-[#BD9557] shadow-xs'
+                      : 'text-[#8A7E70] hover:text-[#EAE3D7]'
+                  }`}
+                  title={
+                    langCode === 'fa'
+                      ? 'فارسی'
+                      : langCode === 'en'
+                      ? 'English'
+                      : 'العربية'
+                  }
+                  aria-label={`Switch to ${langCode.toUpperCase()}`}
+                >
+                  {langCode.toUpperCase()}
+                </button>
+              );
+            })}
+          </div>
         </div>
       </div>
     </header>
